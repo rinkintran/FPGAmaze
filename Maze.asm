@@ -113,25 +113,27 @@
 main:    
 
 		 CALL 	vert 					;pushes all vertical lines into stack
-drawv:	 MOV 	r4, 0xFF				;starts r4 as stack pointer at 0xFF
+drawv:	 	 MOV 	r4, 0xFF				;starts r4 as stack pointer at 0xFF
 		 LD 	r7, (r4)				;loads start x coordinate into r7
 		 SUB 	r4, 0x01 				;decrements stack pointer by 0x01
 		 LD 	r8, (r4)				;loads start y coordinate into r8
 		 SUB 	r4, 0x01 				;decrements stack pointer by 0x01
-		 LD		r9, (r4)				;loads end y coordinate into r9
+		 LD	r9, (r4)				;loads end y coordinate into r9
+		 SUB 	r4, 0x01 				;decrements stack pointer by 0x01
 		 MOV 	r6, GREEN
-		 CALL 	draw_vertical_line		;draws the vertical line
+		 CALL 	draw_vertical_line			;draws the vertical line
 		 CMP	r4, 0xD2				;compares stack pointer to end of vertical lines(255-45=210)
 		 BRNE	drawv					
 
 		 CALL 	horiz					;pushes all horizontal lines into stack, above vert lines
-drawh:	 LD 	r7, (r4)				;loads start y coordinate into r7
+drawh:	  	 LD 	r7, (r4)				;loads start y coordinate into r7
 		 SUB 	r4, 0x01 				;decrements stack pointer by 0x01
-		 LD		r8, (r4)				;loads start x coordinate into r8
+		 LD	r8, (r4)				;loads start x coordinate into r8
 		 SUB 	r4, 0x01 				;decrements stack pointer by 0x01
 		 LD 	r9, (r4) 				;loads end x coordinate into r9
+		 SUB 	r4, 0x01 				;decrements stack pointer by 0x01
 		 MOV 	r6, GREEN
-		 CALL 	draw_horizontal_line 	;draws the horizontal line
+		 CALL 	draw_horizontal_line 			;draws the horizontal line
 		 CMP 	r4, 0xAE				;compares stack pointer to end of horizontal lines(210-36=174)
 		 BRNE	drawh 					
 
@@ -189,14 +191,14 @@ draw_dot:
 ; --------------------------------------------------------------------
 
 ; --------------------------------------------------------------------
-horiz: 	MOV r29, 0x00	;y position
+horiz: 		MOV r29, 0x00	;y position
 		MOV r30, 0x00	;starting x position
 		MOV r31, 0x0E	;ending x position
-		PUSH r29		;puts y position to stack
-		PUSH r30		;puts starting x position to stack
-		PUSH r31		;puts ending x position to stack
+		PUSH r29	;puts y position to stack
+		PUSH r30	;puts starting x position to stack
+		PUSH r31	;puts ending x position to stack
 		
-		PUSH r29		;line 1
+		PUSH r29	;line 1
 		MOV r30, 0x13	;start 19
 		MOV r31, 0x27	;end 39
 		PUSH r30
@@ -204,7 +206,7 @@ horiz: 	MOV r29, 0x00	;y position
 		
 		MOV r29, 0X04	;line 4
 		MOV r30, 0x09	;start 9
-		MOV	r31, 0x0E	;end 14
+		MOV r31, 0x0E	;end 14
 		PUSH r29
 		PUSH r30
 		PUSH r31
